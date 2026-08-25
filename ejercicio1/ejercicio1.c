@@ -27,14 +27,14 @@ int main() {
                 estado = 2;
             }
             else if (c == '0') {
-                estado = 5;
+                estado = 3;
             }
             else {
                 error = 1;
             }
         }
 
-        //  como leyo un signo sigue un digito
+        // como leyo un signo sigue un digito
         else if (estado == 1) {
             if (c >= '0' && c <= '9') {
                 estado = 2;
@@ -59,12 +59,12 @@ int main() {
         }
 
         // leyo un cero inicial
-        else if (estado == 5) {
+        else if (estado == 3) {
             if (c >= '0' && c <= '7') {
-                estado = 6;
+                estado = 4;
             }
             else if (c == 'x' || c == 'X') {
-                estado = 7;
+                estado = 5;
             }
             else if (c == '@') {
                 decimales++;
@@ -76,9 +76,9 @@ int main() {
         }
 
         // numero octal
-        else if (estado == 6) {
+        else if (estado == 4) {
             if (c >= '0' && c <= '7') {
-                estado = 6;
+                estado = 4;
             }
             else if (c == '@') {
                 octales++;
@@ -90,11 +90,11 @@ int main() {
         }
 
         // leyo 0x o 0X, debe seguir un digito hexadecimal
-        else if (estado == 7) {
+        else if (estado == 5) {
             if ((c >= '0' && c <= '9') ||
                 (c >= 'a' && c <= 'f') ||
                 (c >= 'A' && c <= 'F')) {
-                estado = 8;
+                estado = 6;
             }
             else {
                 error = 1;
@@ -102,11 +102,11 @@ int main() {
         }
        
         // Numero hexadecimal
-        else if (estado == 8) {
+        else if (estado == 6) {
             if ((c >= '0' && c <= '9') ||
                 (c >= 'a' && c <= 'f') ||
                 (c >= 'A' && c <= 'F')) {
-                estado = 8;
+                estado = 6;
             }
             else if (c == '@') {
                 hexadecimales++;
@@ -116,6 +116,7 @@ int main() {
                 error = 1;
             }
         }
+
         // Si una transicion no es valida, termina el recorrido
         if (error) {
             break;
@@ -127,13 +128,13 @@ int main() {
         if (estado == 2) {
             decimales++;
         }
-        else if (estado == 5) {
+        else if (estado == 3) {
             decimales++;
         }
-        else if (estado == 6) {
+        else if (estado == 4) {
             octales++;
         }
-        else if (estado == 8) {
+        else if (estado == 6) {
             hexadecimales++;
         }
         else {
