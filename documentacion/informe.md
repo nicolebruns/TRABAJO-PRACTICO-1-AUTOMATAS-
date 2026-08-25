@@ -42,7 +42,6 @@ Donde:
   es el conjunto de estados finales.
 
 ### Tabla de transiciones
-### Tabla de transiciones
 
 | Estado actual | Entrada | Estado siguiente |
 |---|---|---|
@@ -89,9 +88,69 @@ Para comprobar el funcionamiento del autómata se probaron cadenas válidas e in
 ![Error signo incompleto](imagenes/ej1-error-signo-incompleto.png)
 
 ## Ejercicio 2
+### Implementación
 
-...
+Para realizar la conversión se creó la siguiente función:
 
+```c
+int caracterAEntero(char c) {
+    return c - '0';
+}
+```
+
+En C, un carácter numérico como '7' no es lo mismo que el número entero 7.
+
+Los caracteres numéricos se encuentran ordenados de forma consecutiva (en el código ASCII). Por este motivo, al restar el carácter '0' se obtiene el valor entero correspondiente.
+
+Por ejemplo:
+
+'7' - '0' = 7
+
+De esta manera se puede convertir cualquier carácter comprendido entre '0' y '9' a su correspondiente número entero.
+
+### Validación de la entrada
+
+Antes de realizar la conversión verificamos que el carácter ingresado se encuentre entre `'0'` y `'9'`.
+
+Para esto utilizamos la siguiente condición:
+
+```c
+caracter < '0' || caracter > '9'
+```
+
+Si la condición se cumple significa que el carácter ingresado no es numérico.
+
+Mediante un while se vuelve a solicitar un carácter hasta que el usuario ingrese uno válido:
+```c
+while (caracter < '0' || caracter > '9') {
+    printf("Error: debe ingresar un caracter numerico.\n");
+    printf("Ingrese un caracter numerico: ");
+    scanf(" %c", &caracter);
+}
+```
+Una vez que el carácter es válido, se llama a la función caracterAEntero y se muestra el resultado.
+
+### Casos de prueba
+
+Para comprobar el funcionamiento del programa se realizaron pruebas con caracteres válidos e inválidos.
+
+| Entrada | Resultado esperado |
+|---|---|
+| `7` | El número entero es `7` |
+| `0` | El número entero es `0` |
+| `9` | El número entero es `9` |
+| `a` | Se informa error y se vuelve a pedir el carácter |
+| `#` | Se informa error y se vuelve a pedir el carácter |
+
+### Capturas de las pruebas
+
+#### Ingreso válido
+
+![Caso valido ejercicio 2](imagenes/ej2-caso-valido.png)
+
+#### Ingreso inválido
+
+![Caso invalido ejercicio 2](imagenes/ej2-caso-invalido.png)
 ## Ejercicio 3
 
 ...
