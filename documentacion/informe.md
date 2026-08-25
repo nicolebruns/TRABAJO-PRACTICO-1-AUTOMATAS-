@@ -4,7 +4,8 @@
  Curso : K2002
  Docente : Ing.Roxana Leituz
 
-## Ejercicio 1
+## Ejercicio 1 - [`ejercicio1/ejercicio1.c`](../ejercicio1/ejercicio1.c)
+
 ### Decisiones tomadas
 Para la resolución de este ejercicio del TP tuvimos que tomar ciertas decisiones sobre algunos casos que no estaban especificados en la consigna. A continuación, listamos las decisiones tomadas:
 
@@ -17,8 +18,22 @@ Ej.: 0xAF, 0X25.
 - 08 y 09: como un número que comienza con 0 intenta reconocerse como octal, decidimos que estos casos sean considerados error léxico, en lugar de interpretarlos como decimales.
 - 0x sin dígitos posteriores: decidimos que sea inválido. Después de 0x o 0X debe aparecer al menos un dígito hexadecimal.
 - Separador final: decidimos que una cadena como 12@07@ sea inválida, ya que interpretamos @ como separador entre dos constantes y, por lo tanto, después de él debe comenzar otra.
+
+### Implementación
+
+Para implementar el autómata se utilizó una variable `estado`, que indica el estado actual durante el recorrido de la cadena.
+
+La cadena se recorre carácter por carácter. Según el estado actual y el carácter leído, se cambia al estado correspondiente siguiendo la tabla de transiciones.
+
+Cuando se encuentra el separador `@`, se contabiliza la constante reconocida y se vuelve al estado inicial para analizar la siguiente.
+
+Si no existe una transición válida para el carácter leído, se informa un error léxico.
+
+Al finalizar la cadena se verifica que el autómata haya quedado en un estado final y se contabiliza la última constante.
+
 ### Autómata
 ![Autómata Ejercicio 1](imagenes/automata-ej1.png)
+
 ### Definición formal
 El autómata se define formalmente como:
 
@@ -87,7 +102,8 @@ Para comprobar el funcionamiento del autómata se probaron cadenas válidas e in
 
 ![Error signo incompleto](imagenes/ej1-error-signo-incompleto.png)
 
-## Ejercicio 2
+## Ejercicio 2 - [`ejercicio2/ejercicio2.c`](../ejercicio2/ejercicio2.c)
+
 ### Implementación
 
 Para realizar la conversión se creó la siguiente función:
