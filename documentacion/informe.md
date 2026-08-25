@@ -1,8 +1,8 @@
 # Trabajo Práctico 1 - Autómatas
 
- Integrantes : Nicole Brunstein
- Curso : K2002
- Docente : Ing.Roxana Leituz
+ - Integrantes : Nicole Brunstein
+ - Curso : K2002
+ - Docente : Ing.Roxana Leituz
 
 ## Ejercicio 1 - [`ejercicio1/ejercicio1.c`](../ejercicio1/ejercicio1.c)
 
