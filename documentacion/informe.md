@@ -195,6 +195,116 @@ Para realizar la operación se decidió dar mayor precedencia al operador * resp
 
 ### Implementación
 
+La solución se dividió en tres funciones principales:
 
+- validarExpresion() --> se encarga de realizar el análisis léxico de la cadena mediante un autómata finito.
+
+- leerNumero() --> permite obtener un número entero a partir de uno o más caracteres numéricos consecutivos.
+
+- evaluarExpresion() --> recorre la operación y calcula el resultado respetando la precedencia de la multiplicación.
+
+### Validación de la entrada
+
+Para validar la cadena se implementó la función:
+
+int validarExpresion(const char cadena[])
+
+Dentro de esta función se utiliza la variable:  int estado = 0;
+
+Esta variable representa el estado actual del autómata.
+
+La cadena se recorre carácter por carácter mediante:
+
+for (int i = 0; cadena[i] != '\0' && cadena[i] != '\n'; i++)
+
+El recorrido finaliza cuando se encuentra el carácter de fin de cadena '\0' o el salto de línea '\n' generado por fgets.
+
+El autómata utiliza tres estados:
+
+- q0: estado inicial. Se espera el primer dígito de la expresión.
+q1: se reconoció al menos un dígito. Se puede continuar leyendo otro dígito o reconocer un operador.
+- q2: se reconoció un operador y se espera obligatoriamente un nuevo dígito.
+
+- Si aparece un carácter para el cual no existe una transición válida, la función retorna:  return 0; --> indicando que se produjo un error léxico.
+
+Al finalizar el recorrido de la cadena se utiliza:  return estado == 1;
+
+Por lo tanto, una expresión solamente es aceptada si el autómata termina en el estado q1, es decir, si la expresión finaliza con un número.
+
+### Autómata (falta imagen)
+
+## Definición formal
+
+El autómata utilizado para reconocer las expresiones se define formalmente como:
+
+M = (Q, Σ, δ, q0, F)
+
+Donde:
+- Q = {q0, q1, q2} --> conjunto de estados.
+- *Σ = {0..9, +, -, } --> alfabeto utilizado.
+- δ --> función de transición, definida mediante la tabla de transiciones.
+- q0 -->  estado inicial.
+- F = {q1} --> conjunto de estados finales.
+
+## Tabla De Decisiones
+
+Estado actual       |        Entrada        |       Estado siguiente
+---------------------------------------------------------------------
+q0                  | 0..9                  | q1
+q1                  | 0..9                  | q1
+q1                  | +, -, *               | q2
+q2                  | 0..9                  | q1
+
+Cualquier transición que no se encuentre definida en la tabla se considera un error léxico.
+El estado q1 es el único estado final, ya que una expresión válida debe terminar necesariamente con un número.
+
+## Funcionamiento General
+
+En la función main la expresión se ingresa mediante:
+
+fgets(cadena, MAX, stdin);
+
+Antes de realizar cualquier operación se valida la cadena:
+
+if (!validarExpresion(cadena)) {
+    printf("Error lexico: la cadena no pertenece al lenguaje.\n");
+    return 0;
+
+Si la cadena no pertenece al lenguaje definido, el programa informa un error léxico y finaliza.
+
+Si la cadena es válida, se evalúa mediante evaluarExpresion(cadena) y se muestra el resultado:
+
+printf("Resultado: %d\n", evaluarExpresion(cadena));
+
+De esta manera, solamente se evalúan aquellas expresiones que previamente fueron reconocidas como válidas por el autómata.
+
+## Casos de prueba
+
+Para comprobar el funcionamiento del programa se realizaron pruebas con expresiones válidas e inválidas.
+
+Entrada	      |          Resultado esperado	         |        Motivo
+---------------------------------------------------------------------------------------------------
+3+4*7+3-5	               29	                                  Se respeta la precedencia de *
+2+3*4	                   14	                                  Se realiza primero 3*4
+2*3+4	                   10	                                  Se realiza primero 2*3
+10-2*3	                 4	                                  Se realiza primero la multiplicación
+2*3*4+5	                 29	                                  Se permiten multiplicaciones consecutivas
+123	                     123	                                Una expresión formada solo por un número es válida
+1++2	                   Error léxico	                        No se permiten operadores consecutivos
+2*	                     Error léxico	                        La expresión no puede terminar con un operador
+*2	                     Error léxico                        	La expresión no puede comenzar con un operador
+2/3	                     Error léxico                        	/ no pertenece al alfabeto
+2+a	                     Error léxico                        	a no pertenece al alfabeto
+2 + 3	                   Error léxico	                        El espacio no pertenece al alfabeto
+
+## Capturas de las pruebas 
+
+- Expresion Válida --> ![Caso válido ejercicio 3](imagenes/ej3-caso-valido.jpeg) 
+  
+- Error por operadores consecutivos --> ![Error operadores ejercicio 3](imagenes/ej3-error-operadores.jpeg)
+
+- Error por operador al final --> ![Error operador final ejercicio 3](imagenes/ej3-error-operador-final.jpeg)
+
+- Error por carácter no válido --> ![Error carácter ejercicio 3](imagenes/ej3-error-caracter.png)
 
 ## Instructivo
