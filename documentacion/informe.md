@@ -1,6 +1,6 @@
 # Trabajo Práctico 1 - Autómatas
 
- - Integrantes : Nicole Brunstein
+ - Integrantes : Nicole Brunstein, Ariana Castro, Maximo Colombatto, Federico Dimenstsein y Agustina Marques Serra
  - Curso : K2002
  - Docente : Ing.Roxana Leituz
 
@@ -167,8 +167,34 @@ Para comprobar el funcionamiento del programa se realizaron pruebas con caracter
 #### Ingreso inválido
 
 ![Caso invalido ejercicio 2](imagenes/ej2-caso-invalido.png)
-## Ejercicio 3
 
-...
+## Ejercicio 3 - [`ejercicio3/ejercicio3.c`](../ejercicio3/ejercicio3.c)
+
+## Decisiones Tomadas
+
+Para la resolución de este ejercicio se decidió separar el problema en dos etapas:
+
+1) Validar que la cadena ingresada represente una operación válida.
+Evaluar la operación respetando la precedencia de los operadores.
+
+2) Se aceptan únicamente:
+
+- números enteros decimales formados por uno o más dígitos entre 0 y 9;
+- los operadores +, - y *.
+
+  La expresión debe comenzar con un número y, después de cada operador, debe aparecer obligatoriamente otro número.
+
+  Por lo tanto, se consideran inválidas las expresiones que:
+
+- comiencen con un operador.
+- terminen con un operador.
+- contengan dos operadores consecutivos.
+- contengan caracteres distintos de los definidos en el alfabeto.
+
+Para realizar la operación se decidió dar mayor precedencia al operador * respecto de + y -.
+
+### Implementación
+
+
 
 ## Instructivo
