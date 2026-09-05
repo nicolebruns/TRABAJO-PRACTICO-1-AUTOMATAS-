@@ -241,7 +241,7 @@ M = (Q, Σ, δ, q0, F)
 
 Donde:
 - Q = {q0, q1, q2} --> conjunto de estados.
-- *Σ = {0..9, +, -, } --> alfabeto utilizado.
+- *Σ = {0..9, +, -, *} --> alfabeto utilizado.
 - δ --> función de transición, definida mediante la tabla de transiciones.
 - q0 -->  estado inicial.
 - F = {q1} --> conjunto de estados finales.
@@ -307,4 +307,4 @@ Entrada	      |          Resultado esperado	         |        Motivo
 
 - Error por carácter no válido --> ![Error carácter ejercicio 3](imagenes/ej3-error-caracter.png)
 
-## Instructivo
+
