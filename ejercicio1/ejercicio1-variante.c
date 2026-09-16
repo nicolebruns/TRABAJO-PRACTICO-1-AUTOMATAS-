@@ -15,7 +15,7 @@ const int tt [8][8] = {
 const int estadoInicial = 0;
 const int estadosFinales[4] = {1,2,4,5};
 int contadores[8] = {0};
-int estadoError = 7;
+const int estadoError = 7;
 
 int columna(int c){
     if (c == '+' || c == '-') return 0;
