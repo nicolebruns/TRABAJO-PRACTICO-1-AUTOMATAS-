@@ -28,7 +28,7 @@ Ej.: 0xAF, 0X25.
 - 08 y 09: como un número que comienza con 0 intenta reconocerse como octal, decidimos que estos casos sean considerados error léxico, en lugar de interpretarlos como decimales.
 - 0x sin dígitos posteriores: decidimos que sea inválido. Después de 0x o 0X debe aparecer al menos un dígito hexadecimal.
 - Separador final: decidimos que una cadena como 12@07@ sea inválida, ya que interpretamos @ como separador entre dos constantes y, por lo tanto, después de él debe comenzar otra.
-
+---
 ### Implementación
 
 Para implementar el autómata se utilizó una variable `estado`, que indica el estado actual durante el recorrido de la cadena.
@@ -37,13 +37,15 @@ La cadena se recorre carácter por carácter. Según el estado actual y el cará
 
 Cuando se encuentra el separador `@`, se contabiliza la constante reconocida y se vuelve al estado inicial para analizar la siguiente.
 
-Si no existe una transición válida para el carácter leído, se informa un error léxico.
+Si una transición conduce al estado q7, la cadena se considera inválida y se informa un error léxico.
 
 Al finalizar la cadena se verifica que el autómata haya quedado en un estado final y se contabiliza la última constante.
 
+---
 ### Autómata
 ![Autómata Ejercicio 1](imagenes/automata-ej1.png)
 
+---
 ### Definición formal
 El autómata se define formalmente como:
 
@@ -65,7 +67,7 @@ Donde:
 - **F = {q2, q3, q4, q6}** es el conjunto de estados finales.
 
 - **q7** estado de rechazo o estado trampa.
-
+---
 ### Tabla de transiciones
 
 | Estado actual | Entrada | Estado siguiente |
@@ -93,7 +95,7 @@ Donde:
 | q6 | `+`, `-`, `x`, `X` | q7 |
 | q7 | Cualquier símbolo | q7 |
 
-
+---
 ### Casos de prueba
 Para comprobar el funcionamiento del autómata se probaron cadenas válidas e inválidas.
 
@@ -108,6 +110,7 @@ Para comprobar el funcionamiento del autómata se probaron cadenas válidas e in
 | `123@0x` | Error léxico | Falta un dígito hexadecimal después de `0x` |
 | `12@07@` | Error léxico | La cadena termina con un separador |
 
+---
 ### Capturas de las pruebas
 ![Caso valido](imagenes/ej1-caso-valido.png)
 
@@ -119,6 +122,7 @@ Para comprobar el funcionamiento del autómata se probaron cadenas válidas e in
 
 ![Error signo incompleto](imagenes/ej1-error-signo-incompleto.png)
 
+---
 ## Ejercicio 2 - [`ejercicio2/ejercicio2.c`](../ejercicio2/ejercicio2.c)
 
 ### Implementación
@@ -141,6 +145,7 @@ Por ejemplo:
 
 De esta manera se puede convertir cualquier carácter comprendido entre '0' y '9' a su correspondiente número entero.
 
+---
 ### Validación de la entrada
 
 Antes de realizar la conversión verificamos que el carácter ingresado se encuentre entre `'0'` y `'9'`.
@@ -163,6 +168,7 @@ while (caracter < '0' || caracter > '9') {
 ```
 Una vez que el carácter es válido, se llama a la función caracterAEntero y se muestra el resultado.
 
+---
 ### Casos de prueba
 
 Para comprobar el funcionamiento del programa se realizaron pruebas con caracteres válidos e inválidos.
@@ -175,6 +181,7 @@ Para comprobar el funcionamiento del programa se realizaron pruebas con caracter
 | `a` | Se informa error y se vuelve a pedir el carácter |
 | `#` | Se informa error y se vuelve a pedir el carácter |
 
+---
 ### Capturas de las pruebas
 
 #### Ingreso válido
@@ -187,141 +194,219 @@ Para comprobar el funcionamiento del programa se realizaron pruebas con caracter
 
 ## Ejercicio 3 - [`ejercicio3/ejercicio3.c`](../ejercicio3/ejercicio3.c)
 
-## Decisiones Tomadas
+### Decisiones tomadas
 
-Para la resolución de este ejercicio se decidió separar el problema en dos etapas:
+Para la resolución del ejercicio se decidió dividir el problema en tres etapas:
 
-1) Validar que la cadena ingresada represente una operación válida.
-Evaluar la operación respetando la precedencia de los operadores.
+1. Verificar que todos los caracteres ingresados pertenezcan al alfabeto permitido.
+2. Validar mediante un autómata finito determinista que la cadena represente una operación correctamente formada.
+3. Evaluar la expresión respetando la precedencia de los operadores.
 
-2) Se aceptan únicamente:
+Se aceptan únicamente:
 
-- números enteros decimales formados por uno o más dígitos entre 0 y 9;
-- los operadores +, - y *.
+- números enteros decimales formados por uno o más dígitos entre `0` y `9`;
+- los operadores `+`, `-` y `*`.
 
-  La expresión debe comenzar con un número y, después de cada operador, debe aparecer obligatoriamente otro número.
+La expresión debe comenzar con un número y, después de cada operador, debe aparecer obligatoriamente otro número.
 
-  Por lo tanto, se consideran inválidas las expresiones que:
+Por lo tanto, se consideran inválidas las expresiones que:
 
-- comiencen con un operador.
-- terminen con un operador.
-- contengan dos operadores consecutivos.
-- contengan caracteres distintos de los definidos en el alfabeto.
+- comiencen con un operador;
+- terminen con un operador;
+- contengan dos operadores consecutivos;
+- contengan caracteres que no pertenezcan al alfabeto definido.
 
-Para realizar la operación se decidió dar mayor precedencia al operador * respecto de + y -.
+Para realizar la operación se decidió dar mayor precedencia al operador `*` respecto de los operadores `+` y `-`.
 
-### Implementación
+---
 
-La solución se dividió en tres funciones principales:
+### Autómata
+FALTA SUBIR IMAGEN
+![Autómata ejercicio 3](imagenes/automata-ej3.png)
 
-- validarExpresion() --> se encarga de realizar el análisis léxico de la cadena mediante un autómata finito.
+El autómata utiliza los siguientes estados:
 
-- leerNumero() --> permite obtener un número entero a partir de uno o más caracteres numéricos consecutivos.
+- `q0`: estado inicial. Se espera el comienzo de un número. Este mismo estado se utiliza luego de reconocer un operador, ya que en ambos casos el símbolo siguiente debe ser obligatoriamente un dígito.
+- `q1`: se reconoció al menos un dígito. Desde este estado puede continuar otro dígito o aparecer un operador. Es el único estado de aceptación.
+- `q2`: estado de rechazo o estado trampa. Se alcanza cuando aparece una secuencia que no corresponde a una expresión válida.
 
-- evaluarExpresion() --> recorre la operación y calcula el resultado respetando la precedencia de la multiplicación.
+Una vez alcanzado `q2`, cualquier símbolo posterior mantiene al autómata en dicho estado y la cadena es rechazada.
 
-### Validación de la entrada
+---
 
-Para validar la cadena se implementó la función:
-
-int validarExpresion(const char cadena[])
-
-Dentro de esta función se utiliza la variable:  int estado = 0;
-
-Esta variable representa el estado actual del autómata.
-
-La cadena se recorre carácter por carácter mediante:
-
-for (int i = 0; cadena[i] != '\0' && cadena[i] != '\n'; i++)
-
-El recorrido finaliza cuando se encuentra el carácter de fin de cadena '\0' o el salto de línea '\n' generado por fgets.
-
-El autómata utiliza tres estados:
-
-- q0: estado inicial. Se espera el primer dígito de la expresión.
-q1: se reconoció al menos un dígito. Se puede continuar leyendo otro dígito o reconocer un operador.
-- q2: se reconoció un operador y se espera obligatoriamente un nuevo dígito.
-
-- Si aparece un carácter para el cual no existe una transición válida, la función retorna:  return 0; --> indicando que se produjo un error léxico.
-
-Al finalizar el recorrido de la cadena se utiliza:  return estado == 1;
-
-Por lo tanto, una expresión solamente es aceptada si el autómata termina en el estado q1, es decir, si la expresión finaliza con un número.
-
-### Autómata (falta imagen)
-
-## Definición formal
+### Definición formal
 
 El autómata utilizado para reconocer las expresiones se define formalmente como:
 
-M = (Q, Σ, δ, q0, F)
+**M = (Q, Σ, δ, q0, F)**
 
-Donde:
-- Q = {q0, q1, q2} --> conjunto de estados.
-- *Σ = {0..9, +, -, *} --> alfabeto utilizado.
-- δ --> función de transición, definida mediante la tabla de transiciones.
-- q0 -->  estado inicial.
-- F = {q1} --> conjunto de estados finales.
+donde:
 
-## Tabla De Decisiones
+- **Q = {q0, q1, q2}** es el conjunto de estados.
+- **Σ = {0..9, +, -, *}** es el alfabeto.
+- **δ** es la función de transición, definida mediante la tabla de transiciones.
+- **q0** es el estado inicial.
+- **F = {q1}** es el conjunto de estados finales.
+- **q2** es el estado de rechazo o estado trampa.
 
-Estado actual       |        Entrada        |       Estado siguiente
----------------------------------------------------------------------
-q0                  | 0..9                  | q1
-q1                  | 0..9                  | q1
-q1                  | +, -, *               | q2
-q2                  | 0..9                  | q1
+---
 
-Cualquier transición que no se encuentre definida en la tabla se considera un error léxico.
-El estado q1 es el único estado final, ya que una expresión válida debe terminar necesariamente con un número.
+### Tabla de transiciones
 
-## Funcionamiento General
+| Estado actual | Entrada | Estado siguiente |
+|---|---|---|
+| q0 | `0..9` | q1 |
+| q0 | `+`, `-`, `*` | q2 |
+| q1 | `0..9` | q1 |
+| q1 | `+`, `-`, `*` | q0 |
+| q2 | cualquier símbolo de `Σ` | q2 |
 
-En la función main la expresión se ingresa mediante:
+El estado `q1` es el único estado de aceptación, ya que una expresión válida debe finalizar necesariamente con un número.
 
-fgets(cadena, MAX, stdin);
+El estado `q2` representa un estado de rechazo o estado trampa. Toda entrada inválida conduce a este estado y, una vez alcanzado, la cadena no puede volver a ser aceptada.
 
-Antes de realizar cualquier operación se valida la cadena:
+---
 
-if (!validarExpresion(cadena)) {
-    printf("Error lexico: la cadena no pertenece al lenguaje.\n");
-    return 0;
+### Implementación
 
-Si la cadena no pertenece al lenguaje definido, el programa informa un error léxico y finaliza.
+La solución se dividió en distintas funciones, cada una con una responsabilidad específica.
 
-Si la cadena es válida, se evalúa mediante evaluarExpresion(cadena) y se muestra el resultado:
+#### Clasificación de caracteres
 
-printf("Resultado: %d\n", evaluarExpresion(cadena));
+La función `columna()` clasifica cada carácter de entrada según corresponda a:
 
-De esta manera, solamente se evalúan aquellas expresiones que previamente fueron reconocidas como válidas por el autómata.
+- un operador (`+`, `-` o `*`);
+- un dígito (`0..9`);
+- un carácter no perteneciente al alfabeto.
 
-## Casos de prueba
+Esta clasificación permite determinar qué columna de la tabla de transiciones debe utilizarse.
 
-Para comprobar el funcionamiento del programa se realizaron pruebas con expresiones válidas e inválidas.
+#### Verificación del alfabeto
 
-Entrada	      |          Resultado esperado	         |        Motivo
----------------------------------------------------------------------------------------------------
-3+4*7+3-5	               29	                                  Se respeta la precedencia de *
-2+3*4	                   14	                                  Se realiza primero 3*4
-2*3+4	                   10	                                  Se realiza primero 2*3
-10-2*3	                 4	                                  Se realiza primero la multiplicación
-2*3*4+5	                 29	                                  Se permiten multiplicaciones consecutivas
-123	                     123	                                Una expresión formada solo por un número es válida
-1++2	                   Error léxico	                        No se permiten operadores consecutivos
-2*	                     Error léxico	                        La expresión no puede terminar con un operador
-*2	                     Error léxico                        	La expresión no puede comenzar con un operador
-2/3	                     Error léxico                        	/ no pertenece al alfabeto
-2+a	                     Error léxico                        	a no pertenece al alfabeto
-2 + 3	                   Error léxico	                        El espacio no pertenece al alfabeto
+La función `verifica()` recorre la cadena y comprueba que todos los caracteres pertenezcan al alfabeto definido para el ejercicio.
 
-## Capturas de las pruebas 
+Si se encuentra un carácter distinto de un dígito o de los operadores permitidos, la expresión se rechaza.
 
-- Expresion Válida --> ![Caso válido ejercicio 3](imagenes/ej3-caso-valido.jpeg) 
-  
-- Error por operadores consecutivos --> ![Error operadores ejercicio 3](imagenes/ej3-error-operadores.jpeg)
+Por ejemplo:
 
-- Error por operador al final --> ![Error operador final ejercicio 3](imagenes/ej3-error-operador-final.jpeg)
+`2/3`
 
-- Error por carácter no válido --> ![Error carácter ejercicio 3](imagenes/ej3-error-caracter.jpeg)
+es rechazada porque `/` no pertenece al alfabeto.
+
+#### Validación mediante el autómata
+
+La función `esPalabraLeng()` recorre la expresión carácter por carácter.
+
+Para cada símbolo se obtiene su categoría mediante `columna()` y luego se consulta la tabla de transiciones para obtener el nuevo estado:
+
+`estadoActual = tt[estadoActual][columna(caracter)];`
+
+La expresión es aceptada únicamente si, al finalizar el recorrido, el autómata se encuentra en el estado final `q1`.
+
+De esta manera, expresiones como:
+
+`2+3`
+
+son aceptadas, mientras que:
+
+`2++3`
+
+son rechazadas porque luego de reconocer el primer operador el autómata se encuentra en `q0`, donde se espera obligatoriamente un dígito.
+
+---
+
+### Evaluación de la expresión
+
+Una vez validada la expresión, se realiza la operación matemática.
+
+Para ello se utilizan principalmente las funciones:
+
+- `esOperacion()`: determina si un carácter es uno de los operadores permitidos.
+- `procesarOperacion()`: procesa el operador reconocido y actualiza el término y el resultado acumulado.
+- `evaluarExpresion()`: recorre la expresión completa y obtiene el resultado final.
+
+---
+
+### Precedencia de operadores
+
+Para respetar la precedencia matemática, las multiplicaciones se resuelven antes de incorporar un término al resultado acumulado.
+
+Se mantienen dos valores principales:
+
+- `terminoActual`: almacena el término que se está calculando;
+- `resultadoTotal`: almacena la suma de los términos que ya fueron completados.
+
+Cuando se encuentra el operador `*`, el número siguiente se multiplica por `terminoActual`.
+
+En cambio, cuando se encuentra `+` o `-`, el término que se estaba calculando se agrega a `resultadoTotal` y comienza un nuevo término.
+
+Por ejemplo, para:
+
+`2+3*4`
+
+primero se obtiene:
+
+`3*4 = 12`
+
+y luego:
+
+`2+12 = 14`
+
+De esta forma se respeta la precedencia de la multiplicación sin necesidad de utilizar funciones externas.
+
+---
+
+### Funcionamiento general
+
+El funcionamiento del programa puede resumirse en los siguientes pasos:
+
+1. Se obtiene la expresión a analizar.
+2. Se verifica que todos sus caracteres pertenezcan al alfabeto.
+3. Se utiliza el autómata para comprobar que la expresión esté correctamente formada.
+4. Si la expresión es válida, se evalúa respetando la precedencia de operadores.
+5. Finalmente se muestra el resultado obtenido.
+
+Si la expresión contiene un carácter que no pertenece al alfabeto, se informa un error léxico.
+
+Si los caracteres pertenecen al alfabeto pero la expresión no tiene una estructura válida, se informa que la operación está mal formada.
+
+---
+
+### Casos de prueba
+
+| Entrada | Resultado esperado | Motivo |
+|---|---:|---|
+| `3+4*7+3-5` | `29` | Se respeta la precedencia de `*` |
+| `2+3*4` | `14` | Se realiza primero `3*4` |
+| `2*3+4` | `10` | Se realiza primero `2*3` |
+| `10-2*3` | `4` | Se realiza primero la multiplicación |
+| `2*3*4+5` | `29` | Se permiten multiplicaciones consecutivas |
+| `123` | `123` | Una expresión formada por un único número es válida |
+| `1++2` | Error | No se permiten operadores consecutivos |
+| `2*` | Error | La expresión no puede terminar con un operador |
+| `*2` | Error | La expresión no puede comenzar con un operador |
+| `2/3` | Error léxico | `/` no pertenece al alfabeto |
+| `2+a` | Error léxico | `a` no pertenece al alfabeto |
+| `2 + 3` | Error léxico | El espacio no pertenece al alfabeto |
+
+---
+
+### Capturas de las pruebas
+
+**Expresión válida**
+
+![Caso válido ejercicio 3](imagenes/ej3-caso-valido.jpeg)
+
+**Error por operadores consecutivos**
+
+![Error operadores ejercicio 3](imagenes/ej3-error-operadores.jpeg)
+
+**Error por operador al final**
+
+![Error operador final ejercicio 3](imagenes/ej3-error-operador-final.jpeg)
+
+**Error por carácter no válido**
+
+![Error carácter ejercicio 3](imagenes/ej3-error-caracter.jpeg)
 
 
