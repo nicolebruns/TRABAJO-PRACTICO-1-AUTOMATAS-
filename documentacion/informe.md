@@ -305,6 +305,6 @@ Entrada	      |          Resultado esperado	         |        Motivo
 
 - Error por operador al final --> ![Error operador final ejercicio 3](imagenes/ej3-error-operador-final.jpeg)
 
-- Error por carácter no válido --> ![Error carácter ejercicio 3](imagenes/ej3-error-caracter.jpng)
+- Error por carácter no válido --> ![Error carácter ejercicio 3](imagenes/ej3-error-caracter.jpeg)
 
 
