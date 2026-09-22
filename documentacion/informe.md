@@ -392,7 +392,8 @@ Si los caracteres pertenecen al alfabeto pero la expresión no tiene una estruct
 ---
 
 ### Capturas de las pruebas
-
+> **PENDIENTE:** Cambiar las capturas del ejercicio 3 porque el código anterior muestra como "error léxico" casos que en realidad corresponden a una expresión mal formada. Diferenciar errores léxicos de errores sintácticos/estructurales.
+> 
 **Expresión válida**
 
 ![Caso válido ejercicio 3](imagenes/ej3-caso-valido.jpeg)
