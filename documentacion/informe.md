@@ -51,7 +51,7 @@ El autómata se define formalmente como:
 
 Donde:
 
-- **Q = {q0, q1, q2, q3, q4, q5, q6}**
+- **Q = {q0, q1, q2, q3, q4, q5, q6, q7}**
   es el conjunto de estados.
 
 - **Σ = {0..9, a..f, A..F, x, X, +, -, @}**
@@ -60,11 +60,11 @@ Donde:
 - **δ**
   es la función de transición, definida en la tabla de transiciones presentada a continuación.
 
-- **q0**
-  es el estado inicial.
+- **q0** es el estado inicial.
 
-- **F = {q2, q3, q4, q6}**
-  es el conjunto de estados finales.
+- **F = {q2, q3, q4, q6}** es el conjunto de estados finales.
+
+- **q7** estado de rechazo o estado trampa.
 
 ### Tabla de transiciones
 
