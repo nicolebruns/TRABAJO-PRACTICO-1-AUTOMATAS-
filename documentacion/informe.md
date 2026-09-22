@@ -73,19 +73,26 @@ Donde:
 | q0 | `+`, `-` | q1 |
 | q0 | `1..9` | q2 |
 | q0 | `0` | q3 |
+| q0 | `x`, `X`, `a..f`, `A..F`, `@` | q7 |
 | q1 | `0..9` | q2 |
+| q1 | `+`, `-`, `x`, `X`, `a..f`, `A..F`, `@` | q7 |
 | q2 | `0..9` | q2 |
 | q2 | `@` | q0 |
+| q2 | `+`, `-`, `x`, `X`, `a..f`, `A..F` | q7 |
 | q3 | `0..7` | q4 |
 | q3 | `x`, `X` | q5 |
 | q3 | `@` | q0 |
+| q3 | `+`, `-`, `8..9`, `a..f`, `A..F` | q7 |
 | q4 | `0..7` | q4 |
 | q4 | `@` | q0 |
+| q4 | `+`, `-`, `8..9`, `x`, `X`, `a..f`, `A..F` | q7 |
 | q5 | `0..9`, `a..f`, `A..F` | q6 |
+| q5 | `+`, `-`, `x`, `X`, `@` | q7 |
 | q6 | `0..9`, `a..f`, `A..F` | q6 |
 | q6 | `@` | q0 |
+| q6 | `+`, `-`, `x`, `X` | q7 |
+| q7 | Cualquier símbolo | q7 |
 
-Cualquier transición que no se encuentre definida en la tabla se considera un error léxico.
 
 ### Casos de prueba
 Para comprobar el funcionamiento del autómata se probaron cadenas válidas e inválidas.
