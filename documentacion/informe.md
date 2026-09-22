@@ -1,17 +1,36 @@
-<div align="center">
+<div style="
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+">
 
-## TRABAJO PRÁCTICO N.º 1 – AUTÓMATAS
+<h2>TRABAJO PRÁCTICO N.º 1 – AUTÓMATAS</h2>
 
-**UNIVERSIDAD TECNOLÓGICA NACIONAL – FRBA**  
+<br>
+
+<strong>UNIVERSIDAD TECNOLÓGICA NACIONAL – FRBA</strong><br>
 Sintaxis y Semántica de los Lenguajes
+
+<br><br><br>
+
+<strong>Integrantes:</strong><br>
+Nicole Brunstein<br>
+Ariana Castro<br>
+Máximo Colombatto<br>
+Federico Dimentstein<br>
+Agustina Marques Serra
+
 <br><br>
-**Integrantes:** Nicole Brunstein, Ariana Castro, Máximo Colombatto, Federico Dimentstein y Agustina Marques Serra  
-**Curso:** K2002  
-**Docente:** Ing. Roxana Leituz
+
+<strong>Curso:</strong> K2002<br>
+<strong>Docente:</strong> Ing. Roxana Leituz
+
 </div>
 
 <div class="page"></div>
-
 
 ## Ejercicio 1 - [`ejercicio1/ejercicio1.c`](../ejercicio1/ejercicio1.c)
 
