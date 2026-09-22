@@ -1,8 +1,18 @@
-# Trabajo Práctico 1 - Autómatas
+<div align="center">
 
- - Integrantes : Nicole Brunstein, Ariana Castro, Maximo Colombatto, Federico Dimenstsein y Agustina Marques Serra
- - Curso : K2002
- - Docente : Ing.Roxana Leituz
+# TRABAJO PRÁCTICO N.º 1 – AUTÓMATAS
+
+**UNIVERSIDAD TECNOLÓGICA NACIONAL – FRBA**  
+Sintaxis y Semántica de los Lenguajes
+
+</div>
+
+<br>
+
+**Integrantes:** Nicole Brunstein, Ariana Castro, Máximo Colombatto, Federico Dimentstein y Agustina Marques Serra  
+**Curso:** K2002  
+**Docente:** Ing. Roxana Leituz  
+
 
 ## Ejercicio 1 - [`ejercicio1/ejercicio1.c`](../ejercicio1/ejercicio1.c)
 
