@@ -1,17 +1,16 @@
 <div align="center">
 
-# TRABAJO PRÁCTICO N.º 1 – AUTÓMATAS
+## TRABAJO PRÁCTICO N.º 1 – AUTÓMATAS
 
 **UNIVERSIDAD TECNOLÓGICA NACIONAL – FRBA**  
 Sintaxis y Semántica de los Lenguajes
-
-</div>
-
-<br>
-
+<br><br>
 **Integrantes:** Nicole Brunstein, Ariana Castro, Máximo Colombatto, Federico Dimentstein y Agustina Marques Serra  
 **Curso:** K2002  
-**Docente:** Ing. Roxana Leituz  
+**Docente:** Ing. Roxana Leituz
+</div>
+
+<div class="page"></div>
 
 
 ## Ejercicio 1 - [`ejercicio1/ejercicio1.c`](../ejercicio1/ejercicio1.c)
@@ -28,7 +27,7 @@ Ej.: 0xAF, 0X25.
 - 08 y 09: como un número que comienza con 0 intenta reconocerse como octal, decidimos que estos casos sean considerados error léxico, en lugar de interpretarlos como decimales.
 - 0x sin dígitos posteriores: decidimos que sea inválido. Después de 0x o 0X debe aparecer al menos un dígito hexadecimal.
 - Separador final: decidimos que una cadena como 12@07@ sea inválida, ya que interpretamos @ como separador entre dos constantes y, por lo tanto, después de él debe comenzar otra.
----
+ 
 ### Implementación
 
 Para implementar el autómata se utilizó una variable `estado`, que indica el estado actual durante el recorrido de la cadena.
@@ -41,11 +40,11 @@ Si una transición conduce al estado q7, la cadena se considera inválida y se i
 
 Al finalizar la cadena se verifica que el autómata haya quedado en un estado final y se contabiliza la última constante.
 
----
+ 
 ### Autómata
 ![Autómata Ejercicio 1](imagenes/automata-ej1.png)
 
----
+ 
 ### Definición formal
 El autómata se define formalmente como:
 
@@ -67,7 +66,7 @@ Donde:
 - **F = {q2, q3, q4, q6}** es el conjunto de estados finales.
 
 - **q7** estado de rechazo o estado trampa.
----
+ 
 ### Tabla de transiciones
 
 | Estado actual | Entrada | Estado siguiente |
@@ -95,7 +94,7 @@ Donde:
 | q6 | `+`, `-`, `x`, `X` | q7 |
 | q7 | Cualquier símbolo | q7 |
 
----
+ 
 ### Casos de prueba
 Para comprobar el funcionamiento del autómata se probaron cadenas válidas e inválidas.
 
@@ -110,7 +109,7 @@ Para comprobar el funcionamiento del autómata se probaron cadenas válidas e in
 | `123@0x` | Error léxico | Falta un dígito hexadecimal después de `0x` |
 | `12@07@` | Error léxico | La cadena termina con un separador |
 
----
+ 
 ### Capturas de las pruebas
 ![Caso valido](imagenes/ej1-caso-valido.png)
 
@@ -122,7 +121,7 @@ Para comprobar el funcionamiento del autómata se probaron cadenas válidas e in
 
 ![Error signo incompleto](imagenes/ej1-error-signo-incompleto.png)
 
----
+<div class="page"></div>
 ## Ejercicio 2 - [`ejercicio2/ejercicio2.c`](../ejercicio2/ejercicio2.c)
 
 ### Implementación
@@ -145,7 +144,7 @@ Por ejemplo:
 
 De esta manera se puede convertir cualquier carácter comprendido entre '0' y '9' a su correspondiente número entero.
 
----
+ 
 ### Validación de la entrada
 
 Antes de realizar la conversión verificamos que el carácter ingresado se encuentre entre `'0'` y `'9'`.
@@ -168,20 +167,20 @@ while (caracter < '0' || caracter > '9') {
 ```
 Una vez que el carácter es válido, se llama a la función caracterAEntero y se muestra el resultado.
 
----
+ 
 ### Casos de prueba
 
 Para comprobar el funcionamiento del programa se realizaron pruebas con caracteres válidos e inválidos.
 
 | Entrada | Resultado esperado |
-|---|---|
+|---|--- |
 | `7` | El número entero es `7` |
 | `0` | El número entero es `0` |
 | `9` | El número entero es `9` |
 | `a` | Se informa error y se vuelve a pedir el carácter |
 | `#` | Se informa error y se vuelve a pedir el carácter |
 
----
+ 
 ### Capturas de las pruebas
 
 #### Ingreso válido
@@ -192,6 +191,7 @@ Para comprobar el funcionamiento del programa se realizaron pruebas con caracter
 
 ![Caso invalido ejercicio 2](imagenes/ej2-caso-invalido.png)
 
+<div class="page"></div>
 ## Ejercicio 3 - [`ejercicio3/ejercicio3.c`](../ejercicio3/ejercicio3.c)
 
 ### Decisiones tomadas
@@ -218,7 +218,7 @@ Por lo tanto, se consideran inválidas las expresiones que:
 
 Para realizar la operación se decidió dar mayor precedencia al operador `*` respecto de los operadores `+` y `-`.
 
----
+ 
 
 ### Autómata
 FALTA SUBIR IMAGEN
@@ -232,7 +232,7 @@ El autómata utiliza los siguientes estados:
 
 Una vez alcanzado `q2`, cualquier símbolo posterior mantiene al autómata en dicho estado y la cadena es rechazada.
 
----
+ 
 
 ### Definición formal
 
@@ -249,7 +249,7 @@ donde:
 - **F = {q1}** es el conjunto de estados finales.
 - **q2** es el estado de rechazo o estado trampa.
 
----
+ 
 
 ### Tabla de transiciones
 
@@ -265,7 +265,7 @@ El estado `q1` es el único estado de aceptación, ya que una expresión válida
 
 El estado `q2` representa un estado de rechazo o estado trampa. Toda entrada inválida conduce a este estado y, una vez alcanzado, la cadena no puede volver a ser aceptada.
 
----
+ 
 
 ### Implementación
 
@@ -313,7 +313,7 @@ son aceptadas, mientras que:
 
 son rechazadas porque luego de reconocer el primer operador el autómata se encuentra en `q0`, donde se espera obligatoriamente un dígito.
 
----
+ 
 
 ### Evaluación de la expresión
 
@@ -325,7 +325,7 @@ Para ello se utilizan principalmente las funciones:
 - `procesarOperacion()`: procesa el operador reconocido y actualiza el término y el resultado acumulado.
 - `evaluarExpresion()`: recorre la expresión completa y obtiene el resultado final.
 
----
+ 
 
 ### Precedencia de operadores
 
@@ -354,7 +354,7 @@ y luego:
 
 De esta forma se respeta la precedencia de la multiplicación sin necesidad de utilizar funciones externas.
 
----
+ 
 
 ### Funcionamiento general
 
@@ -370,12 +370,12 @@ Si la expresión contiene un carácter que no pertenece al alfabeto, se informa 
 
 Si los caracteres pertenecen al alfabeto pero la expresión no tiene una estructura válida, se informa que la operación está mal formada.
 
----
+ 
 
 ### Casos de prueba
 
 | Entrada | Resultado esperado | Motivo |
-|---|---:|---|
+|---|---|---|
 | `3+4*7+3-5` | `29` | Se respeta la precedencia de `*` |
 | `2+3*4` | `14` | Se realiza primero `3*4` |
 | `2*3+4` | `10` | Se realiza primero `2*3` |
@@ -389,7 +389,7 @@ Si los caracteres pertenecen al alfabeto pero la expresión no tiene una estruct
 | `2+a` | Error léxico | `a` no pertenece al alfabeto |
 | `2 + 3` | Error léxico | El espacio no pertenece al alfabeto |
 
----
+ 
 
 ### Capturas de las pruebas
 > **PENDIENTE:** Cambiar las capturas del ejercicio 3 porque el código anterior muestra como "error léxico" casos que en realidad corresponden a una expresión mal formada. Diferenciar errores léxicos de errores sintácticos/estructurales.
